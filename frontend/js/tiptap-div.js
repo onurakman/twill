@@ -7,15 +7,29 @@ export class TiptapDiv extends Node {
 
   get schema () {
     return {
-      content: 'inline*',
+      attrs: {
+        id: {
+          default: null
+        },
+        class: {
+          default: null
+        },
+        style: {
+          default: null
+        }
+      },
+      content: 'block*',
       draggable: false,
       group: 'block',
       parseDOM: [{
-        tag: 'div'
+        tag: 'div',
+        getAttrs: dom => ({
+          id: dom.getAttribute('id'),
+          class: dom.getAttribute('class'),
+          style: dom.getAttribute('style')
+        })
       }],
-      toDOM () {
-        return ['div', 0]
-      }
+      toDOM: node => ['div', node.attrs]
     }
   }
 }
