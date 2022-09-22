@@ -179,6 +179,7 @@
   import FormStoreMixin from '@/mixins/formStore'
   import InputframeMixin from '@/mixins/inputFrame'
   import LocaleMixin from '@/mixins/locale'
+  import { TiptapDiv } from '../tiptap-div'
 
   // Todo: load highligth depending of needs
   // import { loadScript } from '@/utils/loader'
@@ -418,7 +419,7 @@
       })
 
       this.editor = new Editor({
-        extensions: extensions,
+        extensions: [...extensions, new TiptapDiv()],
         content: content,
         onUpdate: ({ getHTML }) => {
           this.value = getHTML()
