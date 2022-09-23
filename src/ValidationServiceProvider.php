@@ -60,6 +60,8 @@ class ValidationServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        Validator::extend('recaptcha', 'A17\\Twill\\Validators\\ReCaptcha@validate');
     }
 
     /**

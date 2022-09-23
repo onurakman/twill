@@ -2,7 +2,9 @@
     'route' => route('admin.login'),
     'screenTitle' => twillTrans('twill::lang.auth.login-title')
 ])
-
+@push('extra_js_head')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endpush
 @section('form')
     <fieldset class="login__fieldset">
         <label class="login__label" for="email">{{ twillTrans('twill::lang.auth.email') }}</label>
@@ -14,6 +16,12 @@
         <a href="{{ route('admin.password.reset.link') }}" class="login__help f--small" tabindex="5"><span>{{ twillTrans('twill::lang.auth.forgot-password') }}</span></a>
         <input type="password" name="password" id="password" class="login__input" required tabindex="2" />
     </fieldset>
+
+    @if(config('services.recaptcha.key'))
+        <fieldset class="login__fieldset">
+            <div class="g-recaptcha" style="margin-top: 35px" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+        </fieldset>
+    @endif
 
     <input class="login__button" type="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
 

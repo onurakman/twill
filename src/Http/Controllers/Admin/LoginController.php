@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\View\Factory as ViewFactory;
 use PragmaRX\Google2FA\Google2FA;
 use Socialite;
+use Illuminate\Support\Facades\Config as AppConfig;
 
 class LoginController extends Controller
 {
@@ -64,12 +65,13 @@ class LoginController extends Controller
     protected $redirectTo;
 
     public function __construct(
-        Config $config,
+        Config      $config,
         AuthManager $authManager,
-        Encrypter $encrypter,
-        Redirector $redirector,
+        Encrypter   $encrypter,
+        Redirector  $redirector,
         ViewFactory $viewFactory
-    ) {
+    )
+    {
         parent::__construct();
 
         $this->authManager = $authManager;
@@ -274,6 +276,22 @@ class LoginController extends Controller
             return $this->afterAuthentication($request, $user);
         } else {
             return $this->sendFailedLoginResponse($request);
+        }
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        if (AppConfig::get('services.recaptcha.key')) {
+            $request->validate([
+                $this->username() => 'required|string',
+                'password' => 'required|string',
+                'g-recaptcha-response' => 'required|recaptcha',
+            ]);
+        } else {
+            $request->validate([
+                $this->username() => 'required|string',
+                'password' => 'required|string',
+            ]);
         }
     }
 }
