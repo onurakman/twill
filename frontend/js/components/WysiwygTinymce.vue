@@ -150,11 +150,14 @@
       init () {
         const editorOptions = {
           plugins: [
-            'advlist', 'anchor', 'autolink', 'charmap', 'code', 'fullscreen',
-            'image', 'insertdatetime', 'link', 'lists', 'media',
-            'preview', 'searchreplace', 'table', 'visualblocks'
+            'preview importcss searchreplace autolink autosave save',
+            'directionality code visualblocks visualchars fullscreen',
+            'image link media template codesample table charmap pagebreak',
+            'nonbreaking anchor insertdatetime advlist lists',
+            'wordcount help charmap quickbars emoticons'
           ],
-          toolbar: 'undo redo | styles | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+          menubar: 'edit view insert format tools table',
+          toolbar: 'undo redo | bold italic underline strikethrough | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview | insertfile image media link anchor codesample | ltr rtl'
         }
         this.editorInitOptions = { ...editorOptions, ...this.options.modules.toolbar }
       },
@@ -191,7 +194,7 @@
         }
       }
     },
-    mounted: function () {
+    beforeMount: function () {
       this.init()
     },
     beforeDestroy () {
