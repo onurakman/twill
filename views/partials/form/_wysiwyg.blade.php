@@ -98,6 +98,55 @@
             in-store="value"
         ></a17-wysiwyg-tiptap>
     @endif
+@elseif($type === 'tinymce')
+    @if($translated)
+        <a17-locale
+            type="a17-wysiwyg-tinymce"
+            :attributes="{
+            label: '{{ $label }}',
+            @include('twill::partials.form.utils._field_name', ['asAttributes' => true])
+            @if ($note) note: '{{ $note }}', @endif
+            @if ($required) required: true, @endif
+            @if ($options) options: {!! e(json_encode($options)) !!}, @endif
+            @if ($placeholder) placeholder: '{{ addslashes($placeholder) }}', @endif
+            @if ($maxlength) maxlength: {{ $maxlength }}, @endif
+            @if ($hideCounter) showCounter: false, @endif
+            @if ($disabled) disabled: true, @endif
+            @if ($readonly) readonly: true, @endif
+            @if ($editSource) editSource: true, @endif
+            @if ($inModal) inModal: true, @endif
+            @if ($limitHeight) limitHeight: true, @endif
+            @if ($default)
+                initialValue: '{{ $default }}',
+                hasDefaultStore: true,
+            @endif
+                inStore: 'value',
+                apiKey: '{{ config('twill.tinymce.api_key') }}'
+            }"
+        ></a17-locale>
+    @else
+        <a17-wysiwyg-tinymce
+            label="{{ $label }}"
+            @include('twill::partials.form.utils._field_name')
+            @if ($note) note="{{ $note }}" @endif
+            @if ($required) :required="true" @endif
+            @if ($options) :options='{!! json_encode($options) !!}' @endif
+            @if ($placeholder) placeholder='{{ $placeholder }}' @endif
+            @if ($maxlength) :maxlength='{{ $maxlength }}' @endif
+            @if ($hideCounter) :showCounter='false' @endif
+            @if ($disabled) disabled @endif
+            @if ($readonly) readonly @endif
+            @if ($editSource) :edit-source='true' @endif
+            @if ($limitHeight) :limit-height='true' @endif
+            @if ($default)
+                :initial-value="'{{ $default }}'"
+            :has-default-store="true"
+            @endif
+            @if ($inModal) :in-modal="true" @endif
+            in-store="value"
+            :apiKey='{{ config('twill.tinymce.api_key') }}'
+        ></a17-wysiwyg-tinymce>
+    @endif
 @else
     @if($translated)
         <a17-locale
