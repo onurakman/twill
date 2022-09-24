@@ -51,6 +51,7 @@
 
   import debounce from 'lodash/debounce'
 
+  import { MEDIA_LIBRARY } from '@/store/mutations'
   import InputMixin from '@/mixins/input'
   import FormStoreMixin from '@/mixins/formStore'
   import InputframeMixin from '@/mixins/inputFrame'
@@ -129,8 +130,20 @@
         }
       },
       ...mapState({
-        baseUrl: state => state.form.baseUrl
+        baseUrl: state => state.form.baseUrl,
+        selectedMedias: state => state.mediaLibrary.selected
       })
+    },
+    watch: {
+      selectedMedias: function (medias) {
+        if (medias.hasOwnProperty(this.$refs.editor.element.id) && medias[this.$refs.editor.element.id].length > 0) {
+          this.$refs.editor.editor.selection.setContent(`<img src="${medias[this.$refs.editor.element.id][0].original}" />`)
+          this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
+            name: this.$refs.editor.element.id,
+            index: 0
+          })
+        }
+      }
     },
     components: {
       Editor
@@ -151,16 +164,17 @@
     methods: {
       init () {
         const editorOptions = {
+          setup: this.setupTinymce,
           convert_urls: false,
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
-            'image link media template codesample table charmap pagebreak',
+            'image imagetools link media template codesample table charmap pagebreak',
             'nonbreaking anchor insertdatetime advlist lists',
             'wordcount help charmap quickbars emoticons'
           ],
           menubar: 'edit view insert format tools table',
-          toolbar: 'undo redo | bold italic underline strikethrough | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview | insertfile image media link anchor codesample | ltr rtl'
+          toolbar: 'undo redo | fullscreen  preview code gallery | bold italic underline strikethrough | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | insertfile image imagetools media link anchor codesample | ltr rtl'
         }
         this.editorInitOptions = { ...editorOptions, ...this.options.modules.toolbar }
       },
@@ -193,12 +207,30 @@
         if (this.showCounter && this.hasMaxlength) {
           this.counter = this.maxlength - newValue
         }
+      },
+      setupTinymce: function (editor) {
+        editor.ui.registry.addButton('gallery', {
+          tooltip: 'Gallery',
+          icon: 'gallery',
+          onAction: this.openImageLib
+        })
+      },
+      openImageLib: function () {
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_CONNECTOR, this.$refs.editor.element.id)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_TYPE, 'image')
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_REPLACE_INDEX, -1)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MAX, 1)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MODE, true)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_FILESIZE_MAX, this.filesizeMax || 0)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_WIDTH_MIN, this.widthMin || 0)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_HEIGHT_MIN, this.heightMin || 0)
+        if (this.$root.$refs.mediaLibrary) this.$root.$refs.mediaLibrary.open()
       }
     },
     beforeMount: function () {
       this.init()
     },
-    beforeDestroy () {
+    beforeDestroy: function () {
       this.$refs.editor.editor.destroy()
     }
   }
