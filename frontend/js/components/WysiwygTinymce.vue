@@ -10,18 +10,19 @@
               ref="editor"
               :api-key="apiKey"
               :init="editorInitOptions"
-              :initial-value="value"
               v-model="value"
+              model-events="change input"
               @change="textUpdate"
+              @input="textUpdate"
             />
           </div>
           <span v-if="shouldShowCounter" class="wysiwyg__limit f--tiny" :class="limitClasses">{{ counter }}</span>
         </div>
-        <div class="form__field form__field--textarea" v-show="activeSource" :dir="dirLocale">
-          <textarea :placeholder="placeholder" :autofocus="autofocus" v-model="value" @change="updateSourcecode"
-                    :style="textareaHeight"></textarea>
-        </div>
-        <a17-button variant="ghost" @click="toggleSourcecode" class="wysiwyg__button">Source code</a17-button>
+<!--        <div class="form__field form__field&#45;&#45;textarea" v-show="activeSource" :dir="dirLocale">-->
+<!--          <textarea :placeholder="placeholder" :autofocus="autofocus" v-model="value" @change="updateSourcecode"-->
+<!--                    :style="textareaHeight"></textarea>-->
+<!--        </div>-->
+<!--        <a17-button variant="ghost" @click="toggleSourcecode" class="wysiwyg__button">Source code</a17-button>-->
       </template>
       <template v-else>
         <div class="wysiwyg" :class="textfieldClasses" :dir="dirLocale">
@@ -30,9 +31,10 @@
               ref="editor"
               :api-key="apiKey"
               :init="editorInitOptions"
-              :initial-value="value"
               v-model="value"
+              model-events="change input"
               @change="textUpdate"
+              @input="textUpdate"
             />
           </div>
           <span v-if="shouldShowCounter" class="wysiwyg__limit f--tiny" :class="limitClasses">{{ counter }}</span>
@@ -171,8 +173,6 @@
         }
       },
       textUpdate: function () {
-        this.$emit('input', this.value)
-        this.$emit('change', this.value)
         this.preventSubmit()
         this._textUpdateInternal()
       },
@@ -198,6 +198,7 @@
       this.init()
     },
     beforeDestroy () {
+      this.$refs.editor.editor.destroy()
     }
   }
 </script>

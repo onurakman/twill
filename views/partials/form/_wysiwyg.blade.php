@@ -121,7 +121,7 @@
                 hasDefaultStore: true,
             @endif
                 inStore: 'value',
-                apiKey: '{{ config('twill.tinymce.api_key') }}'
+                apiKey: '{{ config("twill.tinymce.api_key") }}'
             }"
         ></a17-locale>
     @else
@@ -144,7 +144,7 @@
             @endif
             @if ($inModal) :in-modal="true" @endif
             in-store="value"
-            :apiKey='{{ config('twill.tinymce.api_key') }}'
+            apiKey="{{ config('twill.tinymce.api_key') }}"
         ></a17-wysiwyg-tinymce>
     @endif
 @else
