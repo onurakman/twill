@@ -151,6 +151,7 @@
     methods: {
       init () {
         const editorOptions = {
+          convert_urls: false,
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
