@@ -136,10 +136,14 @@
     },
     watch: {
       selectedMedias: function (medias) {
-        if (medias.hasOwnProperty(this.$refs.editor.element.id) && medias[this.$refs.editor.element.id].length > 0) {
-          this.$refs.editor.editor.selection.setContent(`<img src="${medias[this.$refs.editor.element.id][0].original}" />`)
+        const editorId = this.$refs.editor.element.id
+        if (medias.hasOwnProperty(editorId) && medias[editorId].length > 0) {
+          const urlOriginal = medias[editorId][0].original
+          const fullUrl = new URL(urlOriginal)
+          const imagePath = urlOriginal.replace(fullUrl.origin, '')
+          this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" />`)
           this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
-            name: this.$refs.editor.element.id,
+            name: editorId,
             index: 0
           })
         }
