@@ -166,6 +166,7 @@
         const editorOptions = {
           setup: this.setupTinymce,
           convert_urls: false,
+          extended_valid_elements: 'span[id|class|style]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
