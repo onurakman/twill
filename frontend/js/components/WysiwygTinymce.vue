@@ -145,7 +145,7 @@
           if (this.mediaType === 'image') {
             this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" />`)
           } else {
-            this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}"></a>`)
+            this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}">Change Link</a>`)
           }
           this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
             name: editorId,
