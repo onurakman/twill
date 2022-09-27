@@ -131,10 +131,24 @@
       },
       ...mapState({
         baseUrl: state => state.form.baseUrl,
-        selectedMedias: state => state.mediaLibrary.selected
+        selectedMedias: state => state.mediaLibrary.selected,
+        selectedFiles: state => state.mediaLibrary.selected
       })
     },
     watch: {
+      selectedFiles: function (files) {
+        const editorId = this.$refs.editor.element.id
+        if (files.hasOwnProperty(editorId) && files[editorId].length > 0) {
+          const urlOriginal = files[editorId][0].original
+          // const fullUrl = new URL(urlOriginal)
+          // const imagePath = urlOriginal.replace(fullUrl.origin, '')
+          this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}"></a>`)
+          this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
+            name: editorId,
+            index: 0
+          })
+        }
+      },
       selectedMedias: function (medias) {
         const editorId = this.$refs.editor.element.id
         if (medias.hasOwnProperty(editorId) && medias[editorId].length > 0) {
@@ -179,7 +193,7 @@
             'wordcount help charmap quickbars emoticons'
           ],
           menubar: 'edit view insert format tools table',
-          toolbar: 'undo redo | fullscreen  preview code gallery | bold italic underline strikethrough | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | insertfile image imagetools media link anchor codesample | ltr rtl'
+          toolbar: 'undo redo | fullscreen  preview code imageFromMediaLib fileFromMediaLib | bold italic underline strikethrough | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | insertfile image imagetools media link anchor codesample | ltr rtl'
         }
         this.editorInitOptions = { ...editorOptions, ...this.options.modules.toolbar }
       },
@@ -214,15 +228,31 @@
         }
       },
       setupTinymce: function (editor) {
-        editor.ui.registry.addButton('gallery', {
-          tooltip: 'Gallery',
+        editor.ui.registry.addButton('imageFromMediaLib', {
+          tooltip: 'Image From Media Library',
           icon: 'gallery',
           onAction: this.openImageLib
+        })
+        editor.ui.registry.addButton('fileFromMediaLib', {
+          tooltip: 'File From Media Library',
+          icon: 'new-document',
+          onAction: this.openFileLib
         })
       },
       openImageLib: function () {
         this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_CONNECTOR, this.$refs.editor.element.id)
         this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_TYPE, 'image')
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_REPLACE_INDEX, -1)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MAX, 1)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MODE, true)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_FILESIZE_MAX, this.filesizeMax || 0)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_WIDTH_MIN, this.widthMin || 0)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_HEIGHT_MIN, this.heightMin || 0)
+        if (this.$root.$refs.mediaLibrary) this.$root.$refs.mediaLibrary.open()
+      },
+      openFileLib: function () {
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_CONNECTOR, this.$refs.editor.element.id)
+        this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_TYPE, 'file')
         this.$store.commit(MEDIA_LIBRARY.UPDATE_REPLACE_INDEX, -1)
         this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MAX, 1)
         this.$store.commit(MEDIA_LIBRARY.UPDATE_MEDIA_MODE, true)
