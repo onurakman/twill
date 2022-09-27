@@ -132,30 +132,21 @@
       ...mapState({
         baseUrl: state => state.form.baseUrl,
         selectedMedias: state => state.mediaLibrary.selected,
-        selectedFiles: state => state.mediaLibrary.selected
+        mediaType: state => state.mediaLibrary.type
       })
     },
     watch: {
-      selectedFiles: function (files) {
-        const editorId = this.$refs.editor.element.id
-        if (files.hasOwnProperty(editorId) && files[editorId].length > 0) {
-          const urlOriginal = files[editorId][0].original
-          // const fullUrl = new URL(urlOriginal)
-          // const imagePath = urlOriginal.replace(fullUrl.origin, '')
-          this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}"></a>`)
-          this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
-            name: editorId,
-            index: 0
-          })
-        }
-      },
       selectedMedias: function (medias) {
         const editorId = this.$refs.editor.element.id
         if (medias.hasOwnProperty(editorId) && medias[editorId].length > 0) {
           const urlOriginal = medias[editorId][0].original
           const fullUrl = new URL(urlOriginal)
           const imagePath = urlOriginal.replace(fullUrl.origin, '')
-          this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" />`)
+          if (this.mediaType === 'image') {
+            this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" />`)
+          } else {
+            this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}"></a>`)
+          }
           this.$store.commit(MEDIA_LIBRARY.DESTROY_SPECIFIC_MEDIA, {
             name: editorId,
             index: 0
