@@ -2,6 +2,7 @@
 
 namespace A17\Twill;
 
+use A17\Twill\Http\Controllers\Front\FileController;
 use A17\Twill\Http\Controllers\Front\GlideController;
 use A17\Twill\Http\Middleware\Authenticate;
 use A17\Twill\Http\Middleware\Impersonate;
@@ -169,6 +170,18 @@ class RouteServiceProvider extends ServiceProvider
                 ->get(
                     '/' . config('twill.glide.base_path') . '/{path}',
                     GlideController::class
+                )
+                ->where('path', '.*');
+        }
+
+        if (
+            config('twill.file_library.file_service') ===
+            'A17\Twill\Services\FileLibrary\S3PrivateToLocal'
+        ) {
+            $router
+                ->get(
+                    '/file/{path}',
+                    FileController::class
                 )
                 ->where('path', '.*');
         }

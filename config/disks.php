@@ -50,4 +50,5 @@ $fileConfigByEndpointType = [
 return [
     'twill_media_library' => $mediaConfigByEndpointType[config('twill.media_library.endpoint_type')],
     'twill_file_library' => $fileConfigByEndpointType[config('twill.file_library.endpoint_type')],
+    'twill_file_library_local' => $fileConfigByEndpointType['local'],
 ];
