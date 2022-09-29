@@ -42,7 +42,7 @@ class S3PrivateToLocal implements FileServiceInterface
             $file = $this->filesystemManager->disk('twill_file_library_local')->get($path);
         } else {
             if ($this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->exists($path)) {
-                $this->filesystemManager->disk($this->config->get('twill_file_library_local'))->put(
+                $this->filesystemManager->disk('twill_file_library_local')->put(
                     $path,
                     $this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->get($path)
                 );
