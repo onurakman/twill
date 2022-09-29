@@ -140,9 +140,9 @@
         const editorId = this.$refs.editor.element.id
         if (medias.hasOwnProperty(editorId) && medias[editorId].length > 0) {
           const urlOriginal = medias[editorId][0].original
-          const fullUrl = new URL(urlOriginal)
-          const imagePath = urlOriginal.replace(fullUrl.origin, '')
           if (this.mediaType === 'image') {
+            const fullUrl = new URL(urlOriginal)
+            const imagePath = urlOriginal.replace(fullUrl.origin, '')
             this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" />`)
           } else {
             this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}">Change Link</a>`)
