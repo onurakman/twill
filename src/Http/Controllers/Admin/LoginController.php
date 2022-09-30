@@ -65,13 +65,12 @@ class LoginController extends Controller
     protected $redirectTo;
 
     public function __construct(
-        Config      $config,
+        Config $config,
         AuthManager $authManager,
-        Encrypter   $encrypter,
-        Redirector  $redirector,
+        Encrypter $encrypter,
+        Redirector $redirector,
         ViewFactory $viewFactory
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->authManager = $authManager;
@@ -277,6 +276,17 @@ class LoginController extends Controller
         } else {
             return $this->sendFailedLoginResponse($request);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     *
+     * This method checks to make sure the user is published.
+     */
+    protected function credentials($request)
+    {
+        return array_merge($request->only($this->username(), 'password'), ['published' => 1]);
     }
 
     protected function validateLogin(Request $request)
