@@ -28,6 +28,6 @@
     window['{{ config('twill.js_namespace') }}'].STORE.form.fields.push({
         name: '{{ $name }}',
         value: @if(isset($item) && $item->$name || ($formFieldsValue ?? false)) true @else false @endif
-    })
+    });
 @endpush
 @endunless

@@ -9,7 +9,7 @@
 @endphp
 
 <script>
-    window['{{ config('twill.js_namespace') }}'].TWILL_BLOCKS_COMPONENTS = {!! $names !!}
+    window['{{ config('twill.js_namespace') }}'].TWILL_BLOCKS_COMPONENTS = {!! $names !!};
 </script>
 
 @foreach($blocks as $block)

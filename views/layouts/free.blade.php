@@ -20,11 +20,11 @@
 @stop
 
 @section('initialStore')
-    window['{{ config('twill.js_namespace') }}'].STORE.medias.crops = {!! json_encode(config('twill.settings.crops') ?? []) !!}
-    window['{{ config('twill.js_namespace') }}'].STORE.medias.selected = {}
+    window['{{ config('twill.js_namespace') }}'].STORE.medias.crops = {!! json_encode(config('twill.settings.crops') ?? []) !!};
+    window['{{ config('twill.js_namespace') }}'].STORE.medias.selected = {};
 
-    window['{{ config('twill.js_namespace') }}'].STORE.browser = {}
-    window['{{ config('twill.js_namespace') }}'].STORE.browser.selected = {}
+    window['{{ config('twill.js_namespace') }}'].STORE.browser = {};
+    window['{{ config('twill.js_namespace') }}'].STORE.browser.selected = {};
 @stop
 
 @push('extra_js')

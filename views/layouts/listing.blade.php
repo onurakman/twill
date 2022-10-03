@@ -179,11 +179,11 @@
         feature: '{{ $featureUrl }}',
         bulkFeature: '{{ $bulkFeatureUrl }}',
         bulkDelete: '{{ $bulkDeleteUrl }}'
-    }
+    };
 
     window['{{ config('twill.js_namespace') }}'].STORE.form = {
         fields: []
-    }
+    };
 
     window['{{ config('twill.js_namespace') }}'].STORE.datatable = {
         data: {!! json_encode($tableData) !!},
@@ -199,10 +199,10 @@
         sortDir: '{{ request('sortDir') ?? 'asc' }}',
         baseUrl: '{{ rtrim(config('app.url'), '/') . '/' }}',
         localStorageKey: '{{ isset($currentUser) ? $currentUser->id : 0 }}__{{ $moduleName ?? Route::currentRouteName() }}'
-    }
+    };
 
     @if ($create && ($openCreate ?? false))
-        window['{{ config('twill.js_namespace') }}'].openCreate = {!! json_encode($openCreate) !!}
+        window['{{ config('twill.js_namespace') }}'].openCreate = {!! json_encode($openCreate) !!};
     @endif
 @stop
 

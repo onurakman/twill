@@ -15,4 +15,4 @@ window['{{ config('twill.js_namespace') }}'].STORE.form.fields.push({
                 @endif
            @else
            @endif
-})
+});

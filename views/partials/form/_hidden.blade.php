@@ -16,7 +16,7 @@
     window['{{ config('twill.js_namespace') }}'].STORE.form.fields.push({
         name: '{{ $name }}',
         value: {!! json_encode($item->$name) !!}
-    })
+    });
 @endif
 
 @endpush

@@ -41,7 +41,7 @@
         maxPage: {{ $maxPage ?? 1 }},
         offset: {{ $offset ?? 10 }},
         filter: {}
-    }
+    };
 @stop
 
 @push('extra_js')

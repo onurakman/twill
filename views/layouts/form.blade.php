@@ -137,7 +137,7 @@
         isCustom: {{ $customForm ? 'true' : 'false' }},
         reloadOnSuccess: {{ ($reloadOnSuccess ?? false) ? 'true' : 'false' }},
         editorNames: []
-    }
+    };
 
     window['{{ config('twill.js_namespace') }}'].STORE.publication = {
         withPublicationToggle: {{ json_encode(($publish ?? true) && isset($item) && $item->isFillable('published')) }},
@@ -154,22 +154,22 @@
         visibility: '{{ isset($item) && $item->isFillable('public') ? ($item->public ? 'public' : 'private') : false }}',
         reviewProcess: {!! isset($reviewProcess) ? json_encode($reviewProcess) : '[]' !!},
         submitOptions: {!! isset($submitOptions) ? json_encode($submitOptions) : 'null' !!}
-    }
+    };
 
-    window['{{ config('twill.js_namespace') }}'].STORE.revisions = {!! json_encode($revisions ?? []) !!}
+    window['{{ config('twill.js_namespace') }}'].STORE.revisions = {!! json_encode($revisions ?? []) !!};
 
-    window['{{ config('twill.js_namespace') }}'].STORE.parentId = {{ $item->parent_id ?? 0 }}
-    window['{{ config('twill.js_namespace') }}'].STORE.parents = {!! json_encode($parents ?? [])  !!}
+    window['{{ config('twill.js_namespace') }}'].STORE.parentId = {{ $item->parent_id ?? 0 }};
+    window['{{ config('twill.js_namespace') }}'].STORE.parents = {!! json_encode($parents ?? [])  !!};
 
-    window['{{ config('twill.js_namespace') }}'].STORE.medias.crops = {!! json_encode(($item->mediasParams ?? []) + config('twill.block_editor.crops') + (config('twill.settings.crops') ?? [])) !!}
-    window['{{ config('twill.js_namespace') }}'].STORE.medias.selected = {}
+    window['{{ config('twill.js_namespace') }}'].STORE.medias.crops = {!! json_encode(($item->mediasParams ?? []) + config('twill.block_editor.crops') + (config('twill.settings.crops') ?? [])) !!};
+    window['{{ config('twill.js_namespace') }}'].STORE.medias.selected = {};
 
-    window['{{ config('twill.js_namespace') }}'].STORE.browser = {}
-    window['{{ config('twill.js_namespace') }}'].STORE.browser.selected = {}
+    window['{{ config('twill.js_namespace') }}'].STORE.browser = {};
+    window['{{ config('twill.js_namespace') }}'].STORE.browser.selected = {};
 
     window['{{ config('twill.js_namespace') }}'].APIKEYS = {
         'googleMapApi': '{{ config('twill.google_maps_api_key') }}'
-    }
+    };
 @stop
 
 @prepend('extra_js')

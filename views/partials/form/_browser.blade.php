@@ -47,7 +47,7 @@
 @unless($renderForBlocks)
     @push('vuexStore')
         @if (isset($form_fields['browsers']) && isset($form_fields['browsers'][$name]))
-            window['{{ config('twill.js_namespace') }}'].STORE.browser.selected["{{ $name }}"] = {!! json_encode($form_fields['browsers'][$name]) !!}
+            window['{{ config('twill.js_namespace') }}'].STORE.browser.selected["{{ $name }}"] = {!! json_encode($form_fields['browsers'][$name]) !!};
         @endif
     @endpush
 @endunless

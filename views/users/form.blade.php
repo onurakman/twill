@@ -148,8 +148,8 @@
             text: {!! json_encode(twillTrans('twill::lang.user-management.cancel')) !!}
           }
         ]
-      }
+      };
     @if ($item->id == $currentUser->id)
-        window['{{ config('twill.js_namespace') }}'].STORE.publication.withPublicationToggle = false
+        window['{{ config('twill.js_namespace') }}'].STORE.publication.withPublicationToggle = false;
     @endif
 @endpush

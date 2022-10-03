@@ -19,5 +19,5 @@
         text: {!! json_encode(twillTrans('twill::lang.settings.cancel')) !!}
       }
     ]
-  }
+  };
 @endpush

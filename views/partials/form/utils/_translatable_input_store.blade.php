@@ -1,4 +1,4 @@
-var fieldIndex = window['{{ config('twill.js_namespace') }}'].STORE.form.fields.findIndex(field => field.name === '{{ $name }}')
+var fieldIndex = window['{{ config('twill.js_namespace') }}'].STORE.form.fields.findIndex(field => field.name === '{{ $name }}');
 var fieldToStore = fieldIndex == -1 ? true : false;
 
 if (fieldToStore) {
@@ -12,7 +12,7 @@ if (fieldToStore) {
                     ) !!}@unless($loop->last),@endif
                 @endforeach
             }
-        })
+        });
     @elseif(isset($item->$name) || null !== $formFieldsValue = getFormFieldsValue($form_fields, $name))
         window['{{ config('twill.js_namespace') }}'].STORE.form.fields.push({
             name: '{{ $name }}',
@@ -22,6 +22,6 @@ if (fieldToStore) {
                     : $formFieldsValue)
                 : '')
             ) !!}
-        })
+        });
     @endif
 }

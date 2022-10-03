@@ -48,7 +48,7 @@
     @push('vuexStore')
         @foreach(getLocales() as $locale)
             @if (isset($form_fields['medias']) && isset($form_fields['medias'][$locale][$name]))
-                window['{{ config('twill.js_namespace') }}'].STORE.medias.selected["{{ $name }}[{{ $locale }}]"] = {!! json_encode($form_fields['medias'][$locale][$name]) !!}
+                window['{{ config('twill.js_namespace') }}'].STORE.medias.selected["{{ $name }}[{{ $locale }}]"] = {!! json_encode($form_fields['medias'][$locale][$name]) !!};
             @endif
         @endforeach
     @endpush
@@ -77,7 +77,7 @@
     @unless($renderForBlocks)
     @push('vuexStore')
         @if (isset($form_fields['medias']) && isset($form_fields['medias'][$name]))
-            window['{{ config('twill.js_namespace') }}'].STORE.medias.selected["{{ $name }}"] = {!! json_encode($form_fields['medias'][$name]) !!}
+            window['{{ config('twill.js_namespace') }}'].STORE.medias.selected["{{ $name }}"] = {!! json_encode($form_fields['medias'][$name]) !!};
         @endif
     @endpush
     @endunless
