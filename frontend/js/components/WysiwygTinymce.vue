@@ -178,8 +178,10 @@
           entity_encoding: 'raw',
           cleanup: false,
           verify_html: false,
-          valid_children: '+*[*]',
           extended_valid_elements: '*[*]',
+          force_br_newlines: false,
+          force_p_newlines: false,
+          forced_root_block: '',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
