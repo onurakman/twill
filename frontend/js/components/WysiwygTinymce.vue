@@ -178,6 +178,7 @@
           entity_encoding: 'raw',
           cleanup: false,
           verify_html: false,
+          valid_children: '+*[*]',
           extended_valid_elements: '*[*]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
