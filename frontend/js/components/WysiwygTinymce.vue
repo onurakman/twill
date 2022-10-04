@@ -176,7 +176,8 @@
           setup: this.setupTinymce,
           convert_urls: false,
           entity_encoding: 'raw',
-          schema: 'html4',
+          valid_children: '+a[div|span|b|i|u|sup|sub|img|#text|tr|td|label|h1|h2|h3|h4|h5|h6]',
+          extended_valid_elements: '*[*]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
