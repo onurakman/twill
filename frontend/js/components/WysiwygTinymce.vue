@@ -176,12 +176,8 @@
           setup: this.setupTinymce,
           convert_urls: false,
           entity_encoding: 'raw',
-          cleanup: false,
-          verify_html: false,
           extended_valid_elements: '*[*]',
-          force_br_newlines: false,
-          force_p_newlines: false,
-          forced_root_block: '',
+          allow_html_in_named_anchor: true,
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
