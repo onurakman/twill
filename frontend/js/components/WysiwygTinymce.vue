@@ -143,7 +143,7 @@
           if (this.mediaType === 'image') {
             const fullUrl = new URL(urlOriginal)
             const imagePath = urlOriginal.replace(fullUrl.origin, '')
-            this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" />`)
+            this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" width="" height="" />`)
           } else {
             this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}">Change Link</a>`)
           }
@@ -175,6 +175,7 @@
         const editorOptions = {
           setup: this.setupTinymce,
           convert_urls: false,
+          entity_encoding: 'raw',
           extended_valid_elements: 'span[id|class|style]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
