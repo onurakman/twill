@@ -176,7 +176,9 @@
           setup: this.setupTinymce,
           convert_urls: false,
           entity_encoding: 'raw',
-          extended_valid_elements: 'span[id|class|style]',
+          cleanup: false,
+          verify_html: false,
+          extended_valid_elements: '*[*]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
