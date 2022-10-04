@@ -176,9 +176,7 @@
           setup: this.setupTinymce,
           convert_urls: false,
           entity_encoding: 'raw',
-          allow_html_in_named_anchor: true,
-          valid_elements: '*[*]',
-          extended_valid_elements: '*[*]',
+          schema: 'html4',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
             'directionality code visualblocks visualchars fullscreen',
