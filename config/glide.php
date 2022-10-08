@@ -21,8 +21,8 @@ return [
     'driver' => env('GLIDE_DRIVER', 'gd'),
     'add_params_to_svgs' => false,
     'default_params' => [
-        'fm' => 'jpg',
-        'q' => '80',
+        'fm' => null, //'jpg',
+        'q' => null, //'80',
         'fit' => 'max',
     ],
     'lqip_default_params' => [
