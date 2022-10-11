@@ -143,7 +143,7 @@
           if (this.mediaType === 'image') {
             const fullUrl = new URL(urlOriginal)
             const imagePath = urlOriginal.replace(fullUrl.origin, '')
-            this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}" alt="" width="" height="" />`)
+            this.$refs.editor.editor.selection.setContent(`<img src="${imagePath}?fm=webp" alt="" width="" height="" />`)
           } else {
             this.$refs.editor.editor.selection.setContent(`<a href="${urlOriginal}">Change Link</a>`)
           }
@@ -176,7 +176,7 @@
           setup: this.setupTinymce,
           convert_urls: false,
           entity_encoding: 'raw',
-          valid_children: '+a[p|a|div|span|b|i|u|sup|sub|img|#text|tr|td|label|h1|h2|h3|h4|h5|h6]',
+          valid_children: '+a[p|a|div|span|b|i|u|sup|sub|img|#text|tr|td|label|h1|h2|h3|h4|h5|h6],+span[p|a|div|span|b|i|u|sup|sub|img|#text|tr|td|label|h1|h2|h3|h4|h5|h6]',
           extended_valid_elements: '*[*]',
           plugins: [
             'preview importcss searchreplace autolink autosave save',
