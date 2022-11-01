@@ -34,7 +34,7 @@ class S3PrivateToLocal implements FileServiceInterface
      */
     public function getUrl($id)
     {
-        return "/file/$id";
+        return config('app.url')."/file/$id";
     }
 
     public function getFile($path) {
