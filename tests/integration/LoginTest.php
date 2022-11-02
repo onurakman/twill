@@ -3,7 +3,7 @@
 namespace A17\Twill\Tests\Integration;
 
 use A17\Twill\Models\User;
-use PragmaRX\Google2FA\Google2FA;
+//use PragmaRX\Google2FA\Google2FA;
 
 class LoginTest extends TestCase
 {

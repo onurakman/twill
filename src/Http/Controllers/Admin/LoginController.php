@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\Factory as ViewFactory;
-use PragmaRX\Google2FA\Google2FA;
+//use PragmaRX\Google2FA\Google2FA;
 use Socialite;
 use Illuminate\Support\Facades\Config as AppConfig;
 

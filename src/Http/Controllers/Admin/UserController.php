@@ -9,7 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use PragmaRX\Google2FAQRCode\Google2FA;
+//use PragmaRX\Google2FAQRCode\Google2FA;
 
 class UserController extends ModuleController
 {

@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Session;
-use PragmaRX\Google2FAQRCode\Google2FA;
+//use PragmaRX\Google2FAQRCode\Google2FA;
 
 class User extends AuthenticatableContract
 {
