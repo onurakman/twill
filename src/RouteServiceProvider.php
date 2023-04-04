@@ -282,6 +282,7 @@ class RouteServiceProvider extends ServiceProvider
                 'bulkDelete',
                 'restoreRevision',
                 'duplicate',
+                'export',
             ];
 
             if (isset($options['only'])) {
