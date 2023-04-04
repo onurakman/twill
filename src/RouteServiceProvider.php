@@ -319,7 +319,7 @@ class RouteServiceProvider extends ServiceProvider
                     'uses' => "{$className}Controller@{$route}",
                 ];
 
-                if (in_array($route, ['browser', 'tags'])) {
+                if (in_array($route, ['browser', 'tags', 'export'])) {
                     Route::get($routeSlug, $mapping);
                 }
 

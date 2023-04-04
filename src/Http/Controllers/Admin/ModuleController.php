@@ -92,6 +92,7 @@ abstract class ModuleController extends Controller
         'bulkEdit' => true,
         'editInModal' => false,
         'skipCreateModal' => false,
+        'export' => true,
         // @todo(3.x): Default to true.
         'includeScheduledInList' => false,
     ];
@@ -323,7 +324,7 @@ abstract class ModuleController extends Controller
         $this->middleware('can:list', ['only' => ['index', 'show']]);
         $this->middleware('can:edit', ['only' => ['store', 'edit', 'update']]);
         $this->middleware('can:duplicate', ['only' => ['duplicate']]);
-        $this->middleware('can:publish', ['only' => ['publish', 'feature', 'bulkPublish', 'bulkFeature']]);
+        $this->middleware('can:publish', ['only' => ['publish', 'feature', 'bulkPublish', 'bulkFeature', 'export']]);
         $this->middleware('can:reorder', ['only' => ['reorder']]);
         $this->middleware('can:delete', ['only' => ['destroy', 'bulkDelete', 'restore', 'bulkRestore', 'forceDelete', 'bulkForceDelete', 'restoreRevision']]);
     }
@@ -1322,6 +1323,7 @@ abstract class ModuleController extends Controller
             'feature',
             'bulkFeature',
             'bulkDelete',
+            'export',
         ])->mapWithKeys(function ($endpoint) {
             return [
                 $endpoint . 'Url' => $this->getIndexOption($endpoint) ? moduleRoute(
@@ -1365,6 +1367,7 @@ abstract class ModuleController extends Controller
                 'bulkEdit' => 'edit',
                 'editInModal' => 'edit',
                 'skipCreateModal' => 'edit',
+                'export' => 'publish',
             ];
 
             $authorized = array_key_exists($option, $authorizableOptions) ? Auth::guard('twill_users')->user()->can($authorizableOptions[$option]) : true;
