@@ -2,6 +2,42 @@
 
 All notable changes to `twill` will be documented in this file.
 
+## 2.12.4 (2023-01-04)
+
+- Revert listAll change as it may conflict with method overrides.
+
+## 2.12.3 (2023-01-03)
+
+- Restore laravel 5.8 support.
+
+## 2.12.2 (2022-12-20)
+
+### Bugfixes
+
+- Fix long dynamic titles not showing inside fieldsets [`#2014`](https://github.com/area17/twill/pull/2014)
+- Fix issue where tags could not save [`#1993`](https://github.com/area17/twill/pull/1993)
+
+## 2.12.1 (2022-12-06)
+
+### Bugfixes
+
+- Fix long dynamic titles overflow on Block items [`#1975`](https://github.com/area17/twill/pull/1975)
+
+## 2.12.0 (2022-11-30)
+
+### Breaking change
+
+- Route::singleton is now Route::twillSingleton [`#1961`](https://github.com/area17/twill/issues/1961)
+
+### Features
+
+- Checkboxes can now have notes [`#1354`](https://github.com/area17/twill/issues/1354)
+- Blocks in the editor can now be cloned [`#1748`](https://github.com/area17/twill/pull/1748)
+
+### Bugfixes
+
+- Various bug fixes
+
 ## 2.11.0 (2022-11-09)
 
 ### Features

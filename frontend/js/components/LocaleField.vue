@@ -4,12 +4,13 @@
       <div class="locale__item" v-for="language in languages" :key="language.value">
         <component
             v-bind:is="`${type}`"
-            v-if="language.value === currentLocale.value || isCustomForm"
+            v-if="language.value === currentLocale.value || isCustomForm || keepInDom"
             :data-lang="language.value"
             v-bind="attributesPerLang(language.value)"
             :name="`${attributes.name}[${language.value}]`"
             :fieldName="attributes.name"
             :locale="language"
+            ref="field"
             @localize="updateLocale"
             @change="updateValue(language.value, ...arguments)"
             @blur="$emit('blur')"
@@ -22,6 +23,7 @@
     <template v-else>
       <component v-bind:is="`${type}`"
                  :name="attributes.name"
+                 ref="field"
                  v-bind="attributesNoLang()"
                  @change="updateValue(false, ...arguments)"
                  @blur="$emit('blur')"
@@ -45,6 +47,10 @@
       type: {
         type: String,
         default: 'text'
+      },
+      keepInDom: {
+        type: Boolean,
+        default: false
       },
       attributes: {
         type: Object,
