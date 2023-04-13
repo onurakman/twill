@@ -2,6 +2,7 @@
 
 namespace A17\Twill\Http\Middleware;
 
+use A17\Twill\Exceptions\NoNavigationForSubdomainException;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -36,7 +37,7 @@ class SupportSubdomainRouting
         $blockLayout = View::exists($subdomain . '.layouts.block') ? ($subdomain . '.layouts.block') : 'site.layouts.blocks';
 
         if (! isset(self::$routingOriginal['twill-navigation'][$subdomain])) {
-            throw new \Exception('Subdomain not found in SupportSubdomainRouting middleware: ' . $subdomain);
+            throw new NoNavigationForSubdomainException('Subdomain: ' . $subdomain);
         }
 
         config([

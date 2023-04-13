@@ -2,14 +2,13 @@
 
 namespace A17\Twill\Repositories\Behaviors;
 
+use A17\Twill\Models\Contracts\TwillModelContract;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+
 trait HandleTags
 {
-    /**
-     * @param \A17\Twill\Models\Model $object
-     * @param array $fields
-     * @return void
-     */
-    public function afterSaveHandleTags($object, $fields)
+    public function afterSaveHandleTags(TwillModelContract $object, array $fields): void
     {
         if (isset($fields['tags']) && is_array($fields['tags'])) {
             $fields['tags'] = implode(',', $fields['tags']);
@@ -29,59 +28,38 @@ trait HandleTags
             if (!$this->shouldIgnoreFieldBeforeSave('tags')) {
                 $object->setTags($fields['tags'] ?? []);
             }
-        } else {
-            if (!$this->shouldIgnoreFieldBeforeSave('bulk_tags')) {
-                $previousCommonTags = $fields['previous_common_tags']->pluck('name')->toArray();
-
-                if (!empty($previousCommonTags)) {
-                    if (!empty($difference = array_diff($previousCommonTags, $fields['bulk_tags'] ?? []))) {
-                        $object->untag($difference);
-                    }
-                }
-
-                $object->tag($fields['bulk_tags'] ?? []);
+        } elseif (!$this->shouldIgnoreFieldBeforeSave('bulk_tags')) {
+            $previousCommonTags = $fields['previous_common_tags']->pluck('name')->toArray();
+            if (!empty($previousCommonTags) && !empty($difference = array_diff($previousCommonTags, $fields['bulk_tags'] ?? []))) {
+                $object->untag($difference);
             }
+            $object->tag($fields['bulk_tags'] ?? []);
         }
     }
 
-    protected function filterHandleTags($query, &$scopes)
-    {
-        $this->addRelationFilterScope($query, $scopes, 'tag_id', 'tags');
-    }
-
-    private function getTagsQuery()
+    private function getTagsQuery(): Builder
     {
         return $this->model->allTags()->orderBy('count', 'desc');
     }
 
-    /**
-     * @param string $query
-     * @param array $ids
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getTags($query = '', $ids = [])
+    public function getTags(?string $query = null, array $ids = []): Collection
     {
         $tagQuery = $this->getTagsQuery();
 
         if (!empty($query)) {
-            $tagQuery->where('slug', 'like', '%' . $query . '%');
+            $tagQuery->where('slug', getLikeOperator(), '%' . $query . '%');
         }
 
-        if (!empty($ids)) {
-            foreach ($ids as $id) {
-                $tagQuery->whereHas('tagged', function ($query) use ($id) {
-                    $query->where('taggable_id', $id);
-                });
-            }
+        foreach ($ids as $id) {
+            $tagQuery->whereHas('tagged', function ($query) use ($id) {
+                $query->where('taggable_id', $id);
+            });
         }
 
         return $tagQuery->get();
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getTagsList()
+    public function getTagsList(): \Illuminate\Support\Collection
     {
         return $this->getTagsQuery()->where('count', '>', 0)->select('name', 'id')->get()->map(function ($tag) {
             return [

@@ -5,12 +5,13 @@ namespace A17\Twill\Http\Controllers\Admin;
 use A17\Twill\Facades\TwillCapsules;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 
 abstract class SingletonModuleController extends ModuleController
 {
     protected $permalinkBase = '';
 
-    public function index($parentModuleId = null)
+    public function index(?int $parentModuleId = null): mixed
     {
         throw new \Exception("{$this->getModelName()} has no index");
     }
@@ -30,12 +31,25 @@ abstract class SingletonModuleController extends ModuleController
                 $this->seed();
                 return $this->editSingleton();
             }
+
             throw new \Exception("$model is not seeded");
         }
 
         Session::put('pages_back_link', url()->current());
 
-        return view($this->viewPrefix . ".form", $this->form($item->id));
+        $controllerForm = $this->getForm($item);
+
+        if ($controllerForm->hasForm()) {
+            $view = 'twill::layouts.form';
+        } else {
+            $view = "twill.{$this->moduleName}.form";
+        }
+
+        View::share('form', $this->form($item->id));
+
+        return View::make($view, $this->form($item->id))->with(
+            ['formBuilder' => $controllerForm->toFrontend($this->getSideFieldsets($item))]
+        );
     }
 
     private function seed(): void
@@ -52,6 +66,7 @@ abstract class SingletonModuleController extends ModuleController
         if (!class_exists($seederClass)) {
             throw new \Exception("$seederClass is missing");
         }
+
         $seeder = new $seederClass();
         $seeder->run();
     }

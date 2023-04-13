@@ -59,9 +59,10 @@ $bezier__ease-in-out: cubic-bezier(.5, 0, .5, 0);
 
 // z-index war
 
-$zindex__tooltip:1600;
-$zindex__notif:1550;
-$zindex__modal:1500;
+$zindex__tooltip:600;
+$zindex__notif:550;
+$zindex__modal:500;
+$zindex__modal__lower:450;
 $zindex__overlay:400;
 $zindex__user: 301;
 $zindex__search:300;

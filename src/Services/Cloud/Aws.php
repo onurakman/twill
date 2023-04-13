@@ -4,30 +4,23 @@ namespace A17\Twill\Services\Cloud;
 
 use Aws\S3\S3Client;
 use Illuminate\Support\Str;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
 
 class Aws
 {
-    public function filesystemFactory($source)
+    public function filesystemFactory($source): Filesystem
     {
         $config = $this->getConfigFor($source);
 
         $client = new S3Client($config);
 
-        if (class_exists($class = \League\Flysystem\AwsS3v3\AwsS3Adapter::class)) {
-            $adapter = new $class($client, $config['bucket'], $config['root']);
-        }
-        else if (class_exists($class = \League\Flysystem\AwsS3V3\AwsS3V3Adapter::class)) {
-            $adapter = new $class($client, $config['bucket'], $config['root']);
-        }
-        else {
-            throw new \Exception('Missing compatible aws adapter.');
-        }
+        $adapter = new AwsS3V3Adapter($client, $config['bucket'], $config['root']);
 
         return new Filesystem($adapter);
     }
 
-    public function getConfigFor($disk)
+    public function getConfigFor($disk): array
     {
         return [
             'credentials' => [
