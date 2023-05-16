@@ -43,7 +43,7 @@ $height__nav: 60px;
 
 .header__title {
   margin-right:33px;
-  margin-left:-17px;
+  margin-left:-10px;
   color:$color__background;
   flex-grow:1;
 
@@ -153,7 +153,7 @@ $height__nav: 60px;
     content:"•";
     color:$color__header--sep;
     display:inline-block;
-    padding:0 17px;
+    padding:0 10px;
     height:$height__nav;
     line-height:$height__nav;
   }
@@ -172,7 +172,7 @@ $height__nav: 60px;
     height:$height__nav;
     line-height:$height__nav;
     display:inherit;
-    padding:0 17px;
+    padding:0 10px;
   }
 }
 
