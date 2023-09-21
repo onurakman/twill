@@ -12,10 +12,15 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 abstract class Model extends BaseModel implements TaggableInterface
 {
-    use HasPresenter, SoftDeletes, TaggableTrait, IsTranslatable, HasDates;
+    use HasPresenter, SoftDeletes, TaggableTrait, IsTranslatable, HasDates, QueryCacheable;
+
+    public $cacheFor = 0; // cache time, in seconds
+
+    protected static $flushCacheOnUpdate = true;
 
     public $timestamps = true;
 
