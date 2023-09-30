@@ -18,7 +18,7 @@ abstract class Model extends BaseModel implements TaggableInterface
 {
     use HasPresenter, SoftDeletes, TaggableTrait, IsTranslatable, HasDates, QueryCacheable;
 
-    public $cacheFor = 0; // cache time, in seconds
+    public $cacheFor = -1; // cache time, in seconds
 
     protected static $flushCacheOnUpdate = true;
 
