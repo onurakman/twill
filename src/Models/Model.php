@@ -20,8 +20,6 @@ abstract class Model extends BaseModel implements TaggableInterface
 
     public $cacheFor = -1; // cache time, in seconds
 
-    protected static $flushCacheOnUpdate = true;
-
     public $timestamps = true;
 
     protected function isTranslationModel()
