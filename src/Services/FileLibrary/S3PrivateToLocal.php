@@ -38,16 +38,23 @@ class S3PrivateToLocal implements FileServiceInterface
     }
 
     public function getFile($path) {
-        if ($this->filesystemManager->disk('twill_file_library_local')->exists($path)) {
-            return $this->filesystemManager->disk('twill_file_library_local')->response($path);
-        } else {
-            if ($this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->exists($path)) {
-                $this->filesystemManager->disk('twill_file_library_local')->put(
-                    $path,
-                    $this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->get($path)
-                );
+        try {
+            if ($this->filesystemManager->disk('twill_file_library_local')->exists($path)) {
                 return $this->filesystemManager->disk('twill_file_library_local')->response($path);
+            } else {
+                if ($this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->exists($path)) {
+                    $content = $this->filesystemManager->disk($this->config->get('twill.file_library.disk'))->get($path);
+                    if (!empty($content)) {
+                        $this->filesystemManager->disk('twill_file_library_local')->put(
+                            $path,
+                            $content
+                        );
+                        return $this->filesystemManager->disk('twill_file_library_local')->response($path);
+                    }
+                }
             }
+        } catch (\Exception $e) {
+            // continue to abort
         }
         abort(Response::HTTP_NOT_FOUND);
     }

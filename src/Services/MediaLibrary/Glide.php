@@ -12,6 +12,7 @@ use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\ServerFactory;
 use League\Glide\Signatures\SignatureFactory;
 use League\Glide\Urls\UrlBuilderFactory;
+use Symfony\Component\HttpFoundation\Response;
 
 class Glide implements ImageServiceInterface
 {
@@ -97,7 +98,12 @@ class Glide implements ImageServiceInterface
             SignatureFactory::create($this->config->get('twill.glide.sign_key'))->validateRequest($this->config->get('twill.glide.base_path') . '/' . $path, $this->request->all());
         }
 
-        return $this->server->getImageResponse($path, $this->request->all());
+        try {
+            return $this->server->getImageResponse($path, $this->request->all());
+        } catch (\Exception $e) {
+            $this->server->deleteCache($path);
+            abort(Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
