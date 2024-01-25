@@ -29,10 +29,12 @@
 {{--                </a>--}}
 {{--            </div>--}}
         </div>
+        @if(config('services.recaptcha.key'))
         <script>
             function onLoginSubmit(token) {
                 document.getElementById("login-form").submit();
             }
         </script>
+        @endif
     </body>
 </html>
