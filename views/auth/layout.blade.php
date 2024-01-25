@@ -6,7 +6,7 @@
     <body class="env env--{{ app()->environment() }}">
         <div class="a17 a17--login">
             <section class="login">
-                <form accept-charset="UTF-8" action="{{ $route }}" method="post">
+                <form id="login-form" accept-charset="UTF-8" action="{{ $route }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <h1 class="f--heading login__heading login__heading--title">{{ config('app.name') }}
 {{--                        <span class="envlabel envlabel--heading">{{ app()->environment() === 'production' ? 'prod' : app()->environment() }}</span>--}}
@@ -29,5 +29,10 @@
 {{--                </a>--}}
 {{--            </div>--}}
         </div>
+        <script>
+            function onLoginSubmit(token) {
+                document.getElementById("login-form").submit();
+            }
+        </script>
     </body>
 </html>

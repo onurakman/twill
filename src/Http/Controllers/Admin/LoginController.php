@@ -5,6 +5,7 @@ namespace A17\Twill\Http\Controllers\Admin;
 use A17\Twill\Http\Requests\Admin\OauthRequest;
 use A17\Twill\Models\User;
 use A17\Twill\Repositories\UserRepository;
+use A17\Twill\Validators\ReCaptcha;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Encryption\Encrypter;
@@ -295,7 +296,7 @@ class LoginController extends Controller
             $request->validate([
                 $this->username() => 'required|string',
                 'password' => 'required|string',
-                'g-recaptcha-response' => 'required|recaptcha',
+                'g-recaptcha-response' => ['required', 'string', new ReCaptcha()],
             ]);
         } else {
             $request->validate([

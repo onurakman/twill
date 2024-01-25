@@ -2,25 +2,25 @@
 
 namespace A17\Twill\Validators;
 
-use GuzzleHttp\Client;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\Http;
 
-class ReCaptcha
+class ReCaptcha implements ValidationRule
 {
-    public function validate($attribute, $value, $parameters, $validator)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $client = new Client;
-        $response = $client->post(
+        $response = Http::asForm()->post(
             'https://www.google.com/recaptcha/api/siteverify',
             [
-                'form_params' =>
-                    [
-                        'secret' => config('services.recaptcha.secret'),
-                        'response' => $value
-                    ]
+                'secret' => config('services.recaptcha.secret'),
+                'response' => $value,
             ]
-        );
-        $body = json_decode((string)$response->getBody());
-        return $body->success;
+        )->object();
+
+        if (! $response->success || $response->score < 0.6) {
+            $fail('Invalid recaptcha token');
+        }
     }
 }
 

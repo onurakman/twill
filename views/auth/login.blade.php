@@ -18,12 +18,13 @@
     </fieldset>
 
     @if(config('services.recaptcha.key'))
-        <fieldset class="login__fieldset">
-            <div class="g-recaptcha" style="margin-top: 35px" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
-        </fieldset>
+        <input class="login__button g-recaptcha"
+               data-sitekey="{{ config('services.recaptcha.key') }}"
+               data-callback="onLoginSubmit"
+               data-action="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
+    @else
+        <input class="login__button" type="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
     @endif
-
-    <input class="login__button" type="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
 
     @if (config('twill.enabled.users-oauth', false))
         @foreach(config('twill.oauth.providers', []) as $index => $provider)
