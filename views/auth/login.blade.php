@@ -18,10 +18,12 @@
     </fieldset>
 
     @if(config('services.recaptcha.key'))
-        <input class="login__button g-recaptcha"
+        <button class="login__button g-recaptcha"
                data-sitekey="{{ config('services.recaptcha.key') }}"
                data-callback="onLoginSubmit"
-               data-action="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
+               data-action="submit" tabindex="3">
+            {{ twillTrans('twill::lang.auth.login') }}
+        </button>
     @else
         <input class="login__button" type="submit" value="{{ twillTrans('twill::lang.auth.login') }}" tabindex="3">
     @endif
