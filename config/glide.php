@@ -22,7 +22,7 @@ return [
     'add_params_to_svgs' => false,
     'default_params' => [
         'fm' => 'webp',
-        'q' => '80',
+        'q' => '90',
         'fit' => 'max',
     ],
     'lqip_default_params' => [
